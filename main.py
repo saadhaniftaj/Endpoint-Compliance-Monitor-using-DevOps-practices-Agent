@@ -9,6 +9,10 @@ import re
 import logging
 import sys
 
+# CarbonCompliance Agent v1.2.0 - Production Ready
+# Secure endpoint compliance monitoring agent
+# Features: Real compliance checks, hardened security, automated deployment
+
 def get_device_id():
     id_file = '/tmp/agent_device_id'
     if os.path.exists(id_file):
