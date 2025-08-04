@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     tags:
-      - 'v:*'   # Only build/push when a tag starting with v: is pushed
+      - 'v*'   # Only build/push when a tag starting with v: is pushed
 
 jobs:
   build:
