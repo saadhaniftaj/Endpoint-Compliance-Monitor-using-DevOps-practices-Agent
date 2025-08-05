@@ -1,57 +1,28 @@
-# CarbonCompliance Agent Download Application
+# CarbonCompliance Agent Download Center
 
-A production-ready FastAPI application for downloading CarbonCompliance agents across different operating systems.
+A standalone web application for downloading CarbonCompliance agents across different operating systems.
 
-## 🌐 **Live Application**
+## 🚀 Features
 
-- **Domain**: `https://carboncomplianceagent.carbonteq.build`
-- **Purpose**: Standalone agent download page
-- **Main Dashboard**: `https://carboncompliance.carbonteq.build`
+- **Multi-Platform Support**: Download agents for macOS, Linux, and Windows
+- **Zero Configuration**: Simple one-click downloads with clear instructions
+- **Modern UI**: Beautiful, responsive interface matching the CarbonCompliance brand
+- **Standalone**: Completely independent from the main dashboard application
+- **Docker Ready**: Easy deployment with Docker and Docker Compose
 
-## 🚀 **Features**
+## 📋 Prerequisites
 
-### **Multi-Platform Support**
-- **macOS**: Native binary with one-command installation
-- **Linux**: Native binary with one-command installation  
-- **Windows**: Native binary with PowerShell installation
+- Python 3.11+ or Docker
+- FastAPI and Uvicorn (if running locally)
 
-### **Security & Safety**
-- **Read-Only Operations**: Agent only reads system information
-- **No Data Collection**: Only sends compliance metrics, no personal data
-- **Secure Communication**: HTTPS with certificate validation
-- **Lightweight**: Minimal resource usage
-- **Transparent**: All activities logged locally
-- **No Remote Access**: Cannot be used for remote control
+## 🛠️ Local Development
 
-### **User Experience**
-- **Single Command**: One-liner installation for each platform
-- **Auto-Registration**: Agent automatically registers with dashboard
-- **Daily Reports**: Automatic compliance reports at 12 AM Pakistani time
-- **Clean Interface**: Professional download page with security information
-
-## 📋 **What the Agent Monitors**
-
-- **Disk Encryption**: FileVault (macOS), LUKS (Linux), BitLocker (Windows)
-- **OS Updates**: System updates and security patches
-- **Security Policies**: Password policies, firewall settings
-- **Compliance Scoring**: Real-time scoring based on industry standards
-
-## 🛠️ **Technology Stack**
-
-- **Backend**: FastAPI (Python)
-- **Frontend**: HTML/CSS/JavaScript
-- **Containerization**: Docker
-- **CI/CD**: GitHub Actions
-- **Registry**: Docker Hub
-
-## 🚀 **Quick Start**
-
-### **Local Development**
+### Option 1: Python Virtual Environment
 
 ```bash
-# Clone the repository
-git clone https://github.com/saadhaniftaj/Endpoint-Compliance-Monitor-using-DevOps-practices-Agent.git
-cd Endpoint-Compliance-Monitor-using-DevOps-practices-Agent
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -60,114 +31,173 @@ pip install -r requirements.txt
 python main.py
 ```
 
-### **Docker Deployment**
+### Option 2: Docker
 
 ```bash
-# Build the image
-docker build -t carboncompliance-agent-download .
+# Build and run with Docker
+docker build -t carboncompliance-download .
+docker run -p 8080:8080 carboncompliance-download
 
-# Run the container
-docker run -p 8080:8080 carboncompliance-agent-download
+# Or use Docker Compose
+docker-compose up -d
 ```
 
-### **Production Deployment**
+## 🌐 Access
+
+Once running, access the application at:
+- **Local**: http://localhost:8080
+- **Docker**: http://localhost:8080
+
+## 📁 Project Structure
+
+```
+download-app/
+├── main.py              # FastAPI application
+├── requirements.txt     # Python dependencies
+├── Dockerfile          # Docker configuration
+├── docker-compose.yml  # Docker Compose setup
+├── README.md           # This file
+└── static/
+    ├── download.html   # Main download page
+    ├── styles.css      # CSS styles (if needed)
+    └── carbonteq_logo.jpeg  # Logo file
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+- `DOMAIN`: Your domain for download URLs (default: your-domain.com)
+
+### Customizing Download URLs
+
+Edit the `download_info` dictionary in `main.py` to update:
+- Download URLs for each platform
+- API endpoints for agent configuration
+- Custom instructions
+
+## 🚀 Deployment
+
+### Docker Deployment
 
 ```bash
-# Pull from Docker Hub
-docker pull saadhaniftaj/endpoint-agent:latest
-
-# Run with domain configuration
-docker run -p 8080:8080 \
-  -e DOMAIN=carboncomplianceagent.carbonteq.build \
-  saadhaniftaj/endpoint-agent:latest
+# Build and deploy
+docker build -t carboncompliance-download .
+docker run -d -p 8080:8080 --name download-app carboncompliance-download
 ```
 
-## 📦 **Docker Images**
+### Docker Compose Deployment
 
-- **Repository**: `saadhaniftaj/endpoint-agent`
-- **Tags**: `latest`, `v1.0.0`, `v1.1.0`, etc.
-- **Architecture**: Multi-platform support
+```bash
+# Deploy with Docker Compose
+docker-compose up -d
 
-## 🔄 **CI/CD Pipeline**
+# View logs
+docker-compose logs -f
 
-### **GitHub Actions Workflow**
-- **Trigger**: Git tags starting with `v*`
-- **Build**: Automated Docker image build
-- **Push**: Automatic push to Docker Hub
-- **Registry**: `saadhaniftaj/endpoint-agent`
+# Stop the service
+docker-compose down
+```
 
-### **Deployment Process**
-1. Create and push a new tag: `git tag v1.2.0 && git push origin v1.2.0`
-2. GitHub Actions automatically builds and pushes to Docker Hub
-3. Pull and deploy on your VM: `docker pull saadhaniftaj/endpoint-agent:v1.2.0`
+### Production Deployment
 
-## 🌐 **API Endpoints**
+For production deployment:
 
-### **Download Information**
-- `GET /api/download/{os_type}` - Get download commands for specific OS
-- **Supported OS**: `macos`, `linux`, `windows`
+1. **Update Domain**: Change `your-domain.com` to your actual domain
+2. **SSL Certificate**: Add SSL/TLS certificate for HTTPS
+3. **Reverse Proxy**: Use Nginx or Apache as reverse proxy
+4. **Load Balancer**: Add load balancer for high availability
 
-### **Health Check**
-- `GET /health` - Application health status
+### Nginx Configuration Example
 
-### **Static Files**
-- `GET /` - Main download page
-- `GET /static/*` - Static assets (HTML, CSS, images)
-
-## 📊 **Example API Response**
-
-```json
-{
-  "binary_name": "carboncompliance-agent-macos",
-  "download_url": "https://carboncomplianceagent.carbonteq.build/downloads/carboncompliance-agent-macos",
-  "single_command": "curl -s https://carboncomplianceagent.carbonteq.build/downloads/carboncompliance-agent-macos -o carboncompliance-agent-macos && chmod +x carboncompliance-agent-macos && ./carboncompliance-agent-macos --api-url=https://carboncompliance.carbonteq.build",
-  "instructions": "chmod +x carboncompliance-agent-macos && ./carboncompliance-agent-macos --api-url=https://carboncompliance.carbonteq.build"
+```nginx
+server {
+    listen 80;
+    server_name download.your-domain.com;
+    
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
 }
 ```
 
-## 🔧 **Configuration**
+## 🔒 Security Considerations
 
-### **Environment Variables**
-- `DOMAIN`: Application domain (default: localhost)
-- `PORT`: Application port (default: 8080)
+- **HTTPS**: Always use HTTPS in production
+- **Rate Limiting**: Implement rate limiting for download endpoints
+- **Access Control**: Consider adding authentication if needed
+- **CORS**: Configure CORS properly for your domain
 
-### **Domain Configuration**
-- **Download URLs**: `https://carboncomplianceagent.carbonteq.build/downloads/`
-- **Agent API**: `https://carboncompliance.carbonteq.build`
+## 📊 Monitoring
 
-## 🛡️ **Security Features**
+### Health Check
 
-- **HTTPS Only**: All communications encrypted
-- **Non-Root User**: Container runs as non-root user
-- **Health Checks**: Regular health monitoring
-- **Input Validation**: All inputs validated and sanitized
-- **CORS Configuration**: Proper CORS headers
-- **Error Handling**: Comprehensive error handling
+The application includes a health check endpoint:
+```bash
+curl http://localhost:8080/health
+```
 
-## 📈 **Monitoring**
+### Docker Health Check
 
-- **Health Endpoint**: `/health` for monitoring
-- **Logging**: Structured logging with different levels
-- **Metrics**: Request/response metrics
-- **Error Tracking**: Comprehensive error logging
+Docker includes automatic health checks:
+```bash
+docker ps  # Check container status
+docker logs download-app  # View application logs
+```
 
-## 🤝 **Contributing**
+## 🐛 Troubleshooting
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+### Common Issues
 
-## 📄 **License**
+1. **Port Already in Use**
+   ```bash
+   # Check what's using port 8080
+   lsof -i :8080
+   # Kill the process or change port in main.py
+   ```
 
-This project is part of the CarbonCompliance endpoint monitoring system.
+2. **Docker Build Fails**
+   ```bash
+   # Clean Docker cache
+   docker system prune -a
+   # Rebuild
+   docker build --no-cache -t carboncompliance-download .
+   ```
 
-## 👨‍💻 **Author**
+3. **Static Files Not Loading**
+   - Ensure `static/` directory exists
+   - Check file permissions
+   - Verify file paths in HTML
 
-- **GitHub**: [@saadhaniftaj](https://github.com/saadhaniftaj)
-- **Project**: DevOps Final Project
+### Logs
 
----
+```bash
+# View application logs
+docker logs download-app
 
-**Note**: This application is designed to work with the main CarbonCompliance dashboard at `https://carboncompliance.carbonteq.build`. 
+# View Docker Compose logs
+docker-compose logs -f
+```
+
+## 🔄 Updates
+
+To update the application:
+
+1. **Pull latest code**
+2. **Rebuild Docker image**: `docker build -t carboncompliance-download .`
+3. **Restart container**: `docker-compose restart`
+
+## 📞 Support
+
+For issues or questions:
+- Check the logs for error messages
+- Verify configuration settings
+- Ensure all dependencies are installed
+
+## 📄 License
+
+This project is part of the CarbonCompliance ecosystem. 

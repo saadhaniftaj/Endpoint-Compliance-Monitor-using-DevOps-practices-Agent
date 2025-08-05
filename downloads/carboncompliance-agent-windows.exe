@@ -1,0 +1,10 @@
+@echo off
+echo CarbonCompliance Agent - carboncompliance-agent-windows.exe
+echo This is a placeholder binary for testing purposes
+echo In production, this would be the actual agent binary
+echo API URL: https://carboncompliance.carbonteq.build
+echo Device ID: %COMPUTERNAME%
+echo Starting agent...
+timeout /t 2 /nobreak >nul
+echo Agent started successfully
+pause

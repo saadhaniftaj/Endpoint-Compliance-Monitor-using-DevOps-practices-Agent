@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "CarbonCompliance Agent - carboncompliance-agent-macos"
+echo "This is a placeholder binary for testing purposes"
+echo "In production, this would be the actual agent binary"
+echo "API URL: https://carboncompliance.carbonteq.build"
+echo "Device ID: $(hostname)"
+echo "Starting agent..."
+sleep 2
+echo "Agent started successfully"
